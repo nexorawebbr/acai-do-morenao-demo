@@ -1678,6 +1678,14 @@ function pegarSelecionados(seletor){
 }
 
 
+
+  const limitesPorTamanho = {
+  "330ml": { frutas: 1, acompanhamentos: 3 },
+  "440ml": { frutas: 2, acompanhamentos: 4 },
+  "550ml": { frutas: 2, acompanhamentos: 4 },
+  "770ml": { frutas: 2, acompanhamentos: 5 },
+  "1 Litro": { frutas: 3, acompanhamentos: 5 }
+};
 /* MONTAR PEDIDO */
 
 function montarPedido(){
@@ -1705,7 +1713,17 @@ function montarPedido(){
     pegarSelecionados(
       '#pedido input[id^="ad"]'
     );
+const limite = limitesPorTamanho[tamanho];
 
+if(limite && frutas.length > limite.frutas){
+  alert("O tamanho " + tamanho + " permite no máximo " + limite.frutas + " fruta(s).");
+  return;
+}
+
+if(limite && acompanhamentos.length > limite.acompanhamentos){
+  alert("O tamanho " + tamanho + " permite no máximo " + limite.acompanhamentos + " acompanhamento(s).");
+  return;
+}
 
   if(!nome){
 
@@ -1771,7 +1789,29 @@ function montarPedido(){
   );
 
 }
+document.querySelectorAll('#pedido input[type="checkbox"]').forEach(item => {
+  item.addEventListener("change", function(){
 
+    const tamanho = document.getElementById("tamanho").value;
+    const limite = limitesPorTamanho[tamanho];
+
+    if(!limite) return;
+
+    const frutas = pegarSelecionados('#pedido input[id^="fruta"]');
+    const acompanhamentos = pegarSelecionados('#pedido input[id^="a"]:not([id^="ad"])');
+
+    if(this.id.startsWith("fruta") && frutas.length > limite.frutas){
+      this.checked = false;
+      alert("O tamanho " + tamanho + " permite no máximo " + limite.frutas + " fruta(s).");
+    }
+
+    if(this.id.startsWith("a") && !this.id.startsWith("ad") && acompanhamentos.length > limite.acompanhamentos){
+      this.checked = false;
+      alert("O tamanho " + tamanho + " permite no máximo " + limite.acompanhamentos + " acompanhamento(s).");
+    }
+
+  });
+});
 </script>
 
 </body>
