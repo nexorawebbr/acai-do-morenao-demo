@@ -648,6 +648,33 @@ section{
   font-weight:900;
 }
 
+.total-box{
+  margin:24px 0 20px;
+  padding:18px 20px;
+  border:1px solid rgba(255,212,0,.35);
+  border-radius:16px;
+  background:rgba(255,212,0,.08);
+}
+
+.total-box small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+
+.total-box strong{
+  display:block;
+  color:var(--yellow);
+  font-size:30px;
+}
+
+.total-details{
+  margin-top:6px;
+  color:#ded3e1;
+  font-size:12px;
+  line-height:1.5;
+}
+
 /* PROMO */
 
 .promo{
@@ -1070,6 +1097,25 @@ Frutas, acompanhamentos e adicionais.
 <li>Sonho de Valsa 1un — R$ 1,50</li>
 <li>Ouro Branco 1un — R$ 1,50</li>
 <li>Marshmallows 2un — R$ 1,00</li>
+<li>Abacaxi — R$ 2,00</li>
+<li>Banana — R$ 2,00</li>
+<li>Manga — R$ 2,00</li>
+<li>Amendoim — R$ 2,00</li>
+<li>Bala de Goma — R$ 2,00</li>
+<li>Calda de Chocolate — R$ 2,00</li>
+<li>Calda de Mel — R$ 2,00</li>
+<li>Calda de Morango — R$ 2,00</li>
+<li>Chocoball — R$ 2,00</li>
+<li>Coco Ralado — R$ 2,00</li>
+<li>Coloreti — R$ 2,00</li>
+<li>Gotas ao Leite — R$ 2,00</li>
+<li>Granola Tradicional — R$ 2,00</li>
+<li>Granulado — R$ 2,00</li>
+<li>Leite Condensado — R$ 2,00</li>
+<li>Leite em Pó — R$ 2,00</li>
+<li>Ovomaltine Flocos — R$ 2,00</li>
+<li>Paçoca — R$ 2,00</li>
+<li>Sucrilhos — R$ 2,00</li>
 </ul>
 </div>
 
@@ -1297,6 +1343,21 @@ Envie para o WhatsApp.
 </div>
 
 <div class="form-group">
+<label>QUANTIDADE DE COPOS</label>
+<input id="quantidade" type="number" min="1" value="1" inputmode="numeric">
+</div>
+
+<div class="form-group">
+<label>DESCONTO</label>
+<div class="choice-grid">
+  <div class="choice">
+    <input type="checkbox" id="primeiraCompra" value="Primeira compra - 20% OFF">
+    <label for="primeiraCompra">Primeira compra (20% OFF)</label>
+  </div>
+</div>
+</div>
+
+<div class="form-group">
 
 <label>FRUTAS</label>
 
@@ -1418,77 +1479,178 @@ Envie para o WhatsApp.
 <div class="choice-grid">
 
 <div class="choice">
-<input type="checkbox" id="ad1" value="Nutella 70g - R$ 8,00">
+<input type="checkbox" id="ad1" data-price="8" value="Nutella 70g - R$ 8,00">
 <label for="ad1">Nutella 70g</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad2" value="Creme Chocolate/Avelã 70g - R$ 6,00">
+<input type="checkbox" id="ad2" data-price="6" value="Creme Chocolate/Avelã 70g - R$ 6,00">
 <label for="ad2">Creme Avelã</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad3" value="Creme de Leitinho 70g - R$ 5,00">
+<input type="checkbox" id="ad3" data-price="5" value="Creme de Leitinho 70g - R$ 5,00">
 <label for="ad3">Creme Leitinho</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad4" value="Creme de Morango 70g - R$ 5,00">
+<input type="checkbox" id="ad4" data-price="5" value="Creme de Morango 70g - R$ 5,00">
 <label for="ad4">Creme Morango</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad5" value="Creme de Paçoca 70g - R$ 5,00">
+<input type="checkbox" id="ad5" data-price="5" value="Creme de Paçoca 70g - R$ 5,00">
 <label for="ad5">Creme Paçoca</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad6" value="Morango - R$ 2,00">
+<input type="checkbox" id="ad6" data-price="2" value="Morango - R$ 2,00">
 <label for="ad6">Morango</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad7" value="Uva - R$ 2,00">
+<input type="checkbox" id="ad7" data-price="2" value="Uva - R$ 2,00">
 <label for="ad7">Uva</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad8" value="Kiwi - R$ 2,00">
+<input type="checkbox" id="ad8" data-price="2" value="Kiwi - R$ 2,00">
 <label for="ad8">Kiwi</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad9" value="Bis - R$ 1,50">
+<input type="checkbox" id="ad9" data-price="1.5" value="Bis - R$ 1,50">
 <label for="ad9">Bis</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad10" value="Beijinho - R$ 3,00">
+<input type="checkbox" id="ad10" data-price="3" value="Beijinho - R$ 3,00">
 <label for="ad10">Beijinho</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad11" value="Brigadeiro - R$ 3,00">
+<input type="checkbox" id="ad11" data-price="3" value="Brigadeiro - R$ 3,00">
 <label for="ad11">Brigadeiro</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad12" value="Sonho de Valsa - R$ 1,50">
+<input type="checkbox" id="ad12" data-price="1.5" value="Sonho de Valsa - R$ 1,50">
 <label for="ad12">Sonho de Valsa</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad13" value="Ouro Branco - R$ 1,50">
+<input type="checkbox" id="ad13" data-price="1.5" value="Ouro Branco - R$ 1,50">
 <label for="ad13">Ouro Branco</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad14" value="Marshmallows - R$ 1,00">
+<input type="checkbox" id="ad14" data-price="1" value="Marshmallows - R$ 1,00">
 <label for="ad14">Marshmallows</label>
 </div>
 
+<div class="choice">
+<input type="checkbox" id="ad15" data-price="2" value="Abacaxi extra - R$ 2,00">
+<label for="ad15">Abacaxi + R$ 2,00</label>
 </div>
 
+<div class="choice">
+<input type="checkbox" id="ad16" data-price="2" value="Banana extra - R$ 2,00">
+<label for="ad16">Banana + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad17" data-price="2" value="Manga extra - R$ 2,00">
+<label for="ad17">Manga + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad18" data-price="2" value="Amendoim extra - R$ 2,00">
+<label for="ad18">Amendoim + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad19" data-price="2" value="Bala de Goma extra - R$ 2,00">
+<label for="ad19">Bala de Goma + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad20" data-price="2" value="Calda de Chocolate extra - R$ 2,00">
+<label for="ad20">Calda de Chocolate + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad21" data-price="2" value="Calda de Mel extra - R$ 2,00">
+<label for="ad21">Calda de Mel + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad22" data-price="2" value="Calda de Morango extra - R$ 2,00">
+<label for="ad22">Calda de Morango + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad23" data-price="2" value="Chocoball extra - R$ 2,00">
+<label for="ad23">Chocoball + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad24" data-price="2" value="Coco Ralado extra - R$ 2,00">
+<label for="ad24">Coco Ralado + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad25" data-price="2" value="Coloreti extra - R$ 2,00">
+<label for="ad25">Coloreti + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad26" data-price="2" value="Gotas ao Leite extra - R$ 2,00">
+<label for="ad26">Gotas ao Leite + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad27" data-price="2" value="Granola Tradicional extra - R$ 2,00">
+<label for="ad27">Granola Tradicional + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad28" data-price="2" value="Granulado extra - R$ 2,00">
+<label for="ad28">Granulado + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad29" data-price="2" value="Leite Condensado extra - R$ 2,00">
+<label for="ad29">Leite Condensado + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad30" data-price="2" value="Leite em Pó extra - R$ 2,00">
+<label for="ad30">Leite em Pó + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad31" data-price="2" value="Ovomaltine Flocos extra - R$ 2,00">
+<label for="ad31">Ovomaltine Flocos + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad32" data-price="2" value="Paçoca extra - R$ 2,00">
+<label for="ad32">Paçoca + R$ 2,00</label>
+</div>
+
+<div class="choice">
+<input type="checkbox" id="ad33" data-price="2" value="Sucrilhos extra - R$ 2,00">
+<label for="ad33">Sucrilhos + R$ 2,00</label>
+</div>
+
+</div>
+
+</div>
+
+<div class="total-box" id="resumoTotal">
+  <small>TOTAL DO PEDIDO</small>
+  <strong id="valorTotal">R$ 0,00</strong>
+  <div class="total-details" id="detalhesTotal">Escolha um tamanho para calcular.</div>
 </div>
 
 <div class="form-group">
@@ -1686,6 +1848,54 @@ function pegarSelecionados(seletor){
   "770ml": { frutas: 2, acompanhamentos: 5 },
   "1 Litro": { frutas: 3, acompanhamentos: 5 }
 };
+
+const precosPorTamanho = {
+  "330ml": 15,
+  "440ml": 20,
+  "550ml": 24,
+  "770ml": 35,
+  "1 Litro": 44
+};
+
+function moeda(valor){
+  return valor.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
+}
+
+function calcularTotal(){
+  const tamanho = document.getElementById("tamanho").value;
+  const quantidadeInput = document.getElementById("quantidade");
+  const quantidade = Math.max(1, parseInt(quantidadeInput.value || "1", 10));
+  const primeiraCompra = document.getElementById("primeiraCompra").checked;
+  const precoBase = precosPorTamanho[tamanho] || 0;
+
+  let totalAdicionaisPorCopo = 0;
+  document.querySelectorAll('#pedido input[id^="ad"]:checked').forEach(item => {
+    totalAdicionaisPorCopo += Number(item.dataset.price || 0);
+  });
+
+  let valorCopos = precoBase * quantidade;
+  if(primeiraCompra){
+    valorCopos *= 0.8;
+  }
+
+  const valorAdicionais = totalAdicionaisPorCopo * quantidade;
+  const total = valorCopos + valorAdicionais;
+
+  document.getElementById("valorTotal").textContent = moeda(total);
+
+  if(!tamanho){
+    document.getElementById("detalhesTotal").textContent = "Escolha um tamanho para calcular.";
+    return total;
+  }
+
+  const textoDesconto = primeiraCompra ? " • primeira compra com 20% OFF" : "";
+  document.getElementById("detalhesTotal").textContent =
+    quantidade + "x " + tamanho + textoDesconto +
+    (valorAdicionais > 0 ? " • adicionais: " + moeda(valorAdicionais) : "");
+
+  return total;
+}
+
 /* MONTAR PEDIDO */
 
 function montarPedido(){
@@ -1695,6 +1905,10 @@ function montarPedido(){
 
   const tamanho =
     document.getElementById("tamanho").value;
+
+  const quantidade = Math.max(1, parseInt(document.getElementById("quantidade").value || "1", 10));
+  const primeiraCompra = document.getElementById("primeiraCompra").checked;
+  const total = calcularTotal();
 
   const observacao =
     document.getElementById("observacao").value.trim();
@@ -1744,7 +1958,8 @@ if(limite && acompanhamentos.length > limite.acompanhamentos){
 `Olá! Gostaria de fazer um pedido no Açaí do Morenão 💜
 
 👤 Nome: ${nome}
-🥤 Tamanho: ${tamanho}`;
+🥤 Tamanho: ${tamanho}
+🔢 Quantidade: ${quantidade}${primeiraCompra ? "\n🏷️ Primeira compra: 20% OFF" : ""}`;
 
 
   if(frutas.length){
@@ -1780,6 +1995,9 @@ if(limite && acompanhamentos.length > limite.acompanhamentos){
 
 
   mensagem +=
+`\n💰 Total: ${moeda(total)}`;
+
+  mensagem +=
 `\n\nPedido montado pelo site do Açaí do Morenão.`;
 
   window.open(
@@ -1795,23 +2013,42 @@ document.querySelectorAll('#pedido input[type="checkbox"]').forEach(item => {
     const tamanho = document.getElementById("tamanho").value;
     const limite = limitesPorTamanho[tamanho];
 
-    if(!limite) return;
+    if(limite){
+      const frutas = pegarSelecionados('#pedido input[id^="fruta"]');
+      const acompanhamentos = pegarSelecionados('#pedido input[id^="a"]:not([id^="ad"])');
 
-    const frutas = pegarSelecionados('#pedido input[id^="fruta"]');
-    const acompanhamentos = pegarSelecionados('#pedido input[id^="a"]:not([id^="ad"])');
+      if(this.id.startsWith("fruta") && frutas.length > limite.frutas){
+        this.checked = false;
+        alert("O tamanho " + tamanho + " permite no máximo " + limite.frutas + " fruta(s).");
+      }
 
-    if(this.id.startsWith("fruta") && frutas.length > limite.frutas){
-      this.checked = false;
-      alert("O tamanho " + tamanho + " permite no máximo " + limite.frutas + " fruta(s).");
+      if(this.id.startsWith("a") && !this.id.startsWith("ad") && acompanhamentos.length > limite.acompanhamentos){
+        this.checked = false;
+        alert("O tamanho " + tamanho + " permite no máximo " + limite.acompanhamentos + " acompanhamento(s).");
+      }
     }
 
-    if(this.id.startsWith("a") && !this.id.startsWith("ad") && acompanhamentos.length > limite.acompanhamentos){
-      this.checked = false;
-      alert("O tamanho " + tamanho + " permite no máximo " + limite.acompanhamentos + " acompanhamento(s).");
-    }
-
+    calcularTotal();
   });
 });
+
+document.getElementById("tamanho").addEventListener("change", function(){
+  const limite = limitesPorTamanho[this.value];
+  if(limite){
+    const frutasMarcadas = Array.from(document.querySelectorAll('#pedido input[id^="fruta"]:checked'));
+    const acompMarcados = Array.from(document.querySelectorAll('#pedido input[id^="a"]:not([id^="ad"]):checked'));
+    frutasMarcadas.slice(limite.frutas).forEach(item => item.checked = false);
+    acompMarcados.slice(limite.acompanhamentos).forEach(item => item.checked = false);
+  }
+  calcularTotal();
+});
+
+document.getElementById("quantidade").addEventListener("input", function(){
+  if(Number(this.value) < 1) this.value = 1;
+  calcularTotal();
+});
+
+calcularTotal();
 </script>
 
 </body>
