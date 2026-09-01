@@ -675,6 +675,111 @@ section{
   line-height:1.5;
 }
 
+
+/* PAGAMENTO */
+
+.payment-options{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.payment-option{
+  position:relative;
+}
+
+.payment-option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.payment-option label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:11px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#190621;
+  color:#ded3e1;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.payment-option input:checked + label{
+  border-color:var(--yellow);
+  background:rgba(255,212,0,.10);
+  color:white;
+}
+
+.pix-box{
+  display:none;
+  margin-top:12px;
+  padding:18px;
+  border-radius:16px;
+  border:1px solid rgba(255,212,0,.30);
+  background:rgba(255,212,0,.07);
+}
+
+.pix-box.show{
+  display:block;
+}
+
+.pix-box p{
+  color:#ded3e1;
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:12px;
+}
+
+.pix-info{
+  display:grid;
+  gap:10px;
+}
+
+.pix-row{
+  padding:12px 14px;
+  border-radius:12px;
+  background:#17051f;
+  border:1px solid var(--line);
+}
+
+.pix-row small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+
+.pix-row strong{
+  display:block;
+  color:white;
+  word-break:break-word;
+}
+
+.copy-pix{
+  width:100%;
+  margin-top:12px;
+  min-height:44px;
+}
+
+.pix-copy-status{
+  min-height:18px;
+  margin-top:8px;
+  color:var(--yellow);
+  font-size:12px;
+  font-weight:bold;
+}
+
+@media(max-width:600px){
+  .payment-options{
+    grid-template-columns:1fr;
+  }
+}
+
 /* PROMO */
 
 .promo{
@@ -1654,6 +1759,52 @@ Envie para o WhatsApp.
 </div>
 
 <div class="form-group">
+<label>FORMA DE PAGAMENTO</label>
+
+<div class="payment-options">
+  <div class="payment-option">
+    <input type="radio" name="pagamento" id="pagPix" value="Pix">
+    <label for="pagPix">📱 Pix</label>
+  </div>
+
+  <div class="payment-option">
+    <input type="radio" name="pagamento" id="pagCartao" value="Cartão">
+    <label for="pagCartao">💳 Cartão</label>
+  </div>
+
+  <div class="payment-option">
+    <input type="radio" name="pagamento" id="pagDinheiro" value="Dinheiro">
+    <label for="pagDinheiro">💵 Dinheiro</label>
+  </div>
+</div>
+
+<div class="pix-box" id="pixBox">
+  <p>
+    Para pagamento via Pix, utilize os dados abaixo. Após realizar o pagamento,
+    por gentileza envie o comprovante junto com o pedido pelo WhatsApp.
+  </p>
+
+  <div class="pix-info">
+    <div class="pix-row">
+      <small>Razão social</small>
+      <strong id="pixRazaoSocial">PREENCHER RAZÃO SOCIAL</strong>
+    </div>
+
+    <div class="pix-row">
+      <small>Chave Pix (CNPJ)</small>
+      <strong id="pixCnpj">PREENCHER CNPJ</strong>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-yellow copy-pix" onclick="copiarPix()">
+    📋 Copiar chave Pix
+  </button>
+
+  <div class="pix-copy-status" id="pixCopyStatus"></div>
+</div>
+</div>
+
+<div class="form-group">
 <label>OBSERVAÇÃO</label>
 <textarea id="observacao" placeholder="Ex.: sem granola, retirar no local..."></textarea>
 </div>
@@ -1898,6 +2049,46 @@ function calcularTotal(){
 
 /* MONTAR PEDIDO */
 
+
+/* PAGAMENTO */
+/* Preencha estes dois dados quando seu tio confirmar exatamente como aparecem no Pix. */
+const PIX_CNPJ = "PREENCHER CNPJ";
+const PIX_RAZAO_SOCIAL = "PREENCHER RAZÃO SOCIAL";
+
+function atualizarPagamento(){
+  const formaPagamento = document.querySelector('input[name="pagamento"]:checked');
+  const pixBox = document.getElementById("pixBox");
+
+  if(formaPagamento && formaPagamento.value === "Pix"){
+    pixBox.classList.add("show");
+    document.getElementById("pixCnpj").textContent = PIX_CNPJ;
+    document.getElementById("pixRazaoSocial").textContent = PIX_RAZAO_SOCIAL;
+  }else{
+    pixBox.classList.remove("show");
+    document.getElementById("pixCopyStatus").textContent = "";
+  }
+}
+
+function copiarPix(){
+  if(PIX_CNPJ === "PREENCHER CNPJ"){
+    document.getElementById("pixCopyStatus").textContent =
+      "Falta preencher o CNPJ correto no site.";
+    return;
+  }
+
+  navigator.clipboard.writeText(PIX_CNPJ).then(() => {
+    document.getElementById("pixCopyStatus").textContent =
+      "Chave Pix copiada!";
+  }).catch(() => {
+    document.getElementById("pixCopyStatus").textContent =
+      "Não foi possível copiar automaticamente. Selecione a chave acima.";
+  });
+}
+
+document.querySelectorAll('input[name="pagamento"]').forEach(item => {
+  item.addEventListener("change", atualizarPagamento);
+});
+
 function montarPedido(){
 
   const nome =
@@ -1909,6 +2100,12 @@ function montarPedido(){
   const quantidade = Math.max(1, parseInt(document.getElementById("quantidade").value || "1", 10));
   const primeiraCompra = document.getElementById("primeiraCompra").checked;
   const total = calcularTotal();
+
+  const formaPagamentoSelecionada =
+    document.querySelector('input[name="pagamento"]:checked');
+
+  const formaPagamento =
+    formaPagamentoSelecionada ? formaPagamentoSelecionada.value : "";
 
   const observacao =
     document.getElementById("observacao").value.trim();
@@ -1949,6 +2146,13 @@ if(limite && acompanhamentos.length > limite.acompanhamentos){
   if(!tamanho){
 
     alert("Escolha o tamanho.");
+    return;
+
+  }
+
+  if(!formaPagamento){
+
+    alert("Escolha a forma de pagamento.");
     return;
 
   }
@@ -1996,6 +2200,18 @@ if(limite && acompanhamentos.length > limite.acompanhamentos){
 
   mensagem +=
 `\n💰 Total: ${moeda(total)}`;
+
+  mensagem +=
+`\n💳 Forma de pagamento: ${formaPagamento}`;
+
+  if(formaPagamento === "Pix"){
+    mensagem +=
+`\n📱 Pix (CNPJ): ${PIX_CNPJ}`;
+    mensagem +=
+`\n🏢 Razão social: ${PIX_RAZAO_SOCIAL}`;
+    mensagem +=
+`\n📎 Após o pagamento, enviar o comprovante pelo WhatsApp.`;
+  }
 
   mensagem +=
 `\n\nPedido montado pelo site do Açaí do Morenão.`;
