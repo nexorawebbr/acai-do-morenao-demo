@@ -529,6 +529,12 @@ section{
   background:rgba(255,255,255,.04);
 }
 
+.builder-form-col{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+}
+
 .builder-info{
   background:
     radial-gradient(circle at 10% 10%,rgba(162,35,209,.25),transparent 40%),
@@ -646,6 +652,69 @@ section{
   content:"✓";
   color:var(--yellow);
   font-weight:900;
+}
+
+.choice input:disabled + label{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.lock-hint{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,212,0,.30);
+  background:rgba(255,212,0,.07);
+  color:var(--yellow);
+  font-size:12px;
+  font-weight:bold;
+}
+
+.lock-hint.hide{
+  display:none;
+}
+
+.carrinho-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#190621;
+  margin-bottom:10px;
+}
+
+.carrinho-item-info strong{
+  display:block;
+  color:var(--yellow);
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+.carrinho-item-info span{
+  display:block;
+  color:#ded3e1;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.carrinho-item-remover{
+  border:0;
+  background:none;
+  color:#ff8a8a;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.entrega-endereco{
+  margin-top:12px;
 }
 
 .total-box{
@@ -1419,19 +1488,23 @@ Marque frutas e acompanhamentos.
 
 <div class="step">
 <div class="step-number">3</div>
-Envie para o WhatsApp.
+Adicione o copo e monte outro (se quiser).
+</div>
+
+<div class="step">
+<div class="step-number">4</div>
+Finalize e envie para o WhatsApp.
 </div>
 
 </div>
 
 </div>
 
-<div class="builder-form reveal">
+<div class="builder-form-col">
 
-<div class="form-group">
-<label>SEU NOME</label>
-<input id="nome" placeholder="Digite seu nome">
-</div>
+<div class="builder-form reveal" id="builderCard">
+
+<h3 id="builderTitulo" style="color:var(--yellow);margin-bottom:16px;font-size:18px;">Monte seu copo</h3>
 
 <div class="form-group">
 <label>TAMANHO</label>
@@ -1445,21 +1518,15 @@ Envie para o WhatsApp.
 <option>1 Litro</option>
 </select>
 
+<div class="lock-hint" id="lockHint">
+🔒 Escolha o tamanho primeiro para liberar frutas, acompanhamentos e adicionais.
+</div>
+
 </div>
 
 <div class="form-group">
-<label>QUANTIDADE DE COPOS</label>
+<label>QUANTIDADE DESTE COPO</label>
 <input id="quantidade" type="number" min="1" value="1" inputmode="numeric">
-</div>
-
-<div class="form-group">
-<label>DESCONTO</label>
-<div class="choice-grid">
-  <div class="choice">
-    <input type="checkbox" id="primeiraCompra" value="Primeira compra - 20% OFF">
-    <label for="primeiraCompra">Primeira compra (20% OFF)</label>
-  </div>
-</div>
 </div>
 
 <div class="form-group">
@@ -1469,17 +1536,17 @@ Envie para o WhatsApp.
 <div class="choice-grid">
 
 <div class="choice">
-<input type="checkbox" id="fruta1" value="Abacaxi">
+<input type="checkbox" id="fruta1" disabled value="Abacaxi">
 <label for="fruta1">Abacaxi</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="fruta2" value="Banana">
+<input type="checkbox" id="fruta2" disabled value="Banana">
 <label for="fruta2">Banana</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="fruta3" value="Manga">
+<input type="checkbox" id="fruta3" disabled value="Manga">
 <label for="fruta3">Manga</label>
 </div>
 
@@ -1494,82 +1561,82 @@ Envie para o WhatsApp.
 <div class="choice-grid">
 
 <div class="choice">
-<input type="checkbox" id="a1" value="Amendoim">
+<input type="checkbox" id="a1" disabled value="Amendoim">
 <label for="a1">Amendoim</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a2" value="Bala de Goma">
+<input type="checkbox" id="a2" disabled value="Bala de Goma">
 <label for="a2">Bala de Goma</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a3" value="Calda de Chocolate">
+<input type="checkbox" id="a3" disabled value="Calda de Chocolate">
 <label for="a3">Calda Chocolate</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a4" value="Calda de Mel">
+<input type="checkbox" id="a4" disabled value="Calda de Mel">
 <label for="a4">Calda de Mel</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a5" value="Calda de Morango">
+<input type="checkbox" id="a5" disabled value="Calda de Morango">
 <label for="a5">Calda Morango</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a6" value="Chocoball">
+<input type="checkbox" id="a6" disabled value="Chocoball">
 <label for="a6">Chocoball</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a7" value="Coco Ralado">
+<input type="checkbox" id="a7" disabled value="Coco Ralado">
 <label for="a7">Coco Ralado</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a8" value="Coloreti">
+<input type="checkbox" id="a8" disabled value="Coloreti">
 <label for="a8">Coloreti</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a9" value="Gotas ao Leite">
+<input type="checkbox" id="a9" disabled value="Gotas ao Leite">
 <label for="a9">Gotas ao Leite</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a10" value="Granola Tradicional">
+<input type="checkbox" id="a10" disabled value="Granola Tradicional">
 <label for="a10">Granola</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a11" value="Granulado">
+<input type="checkbox" id="a11" disabled value="Granulado">
 <label for="a11">Granulado</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a12" value="Leite Condensado">
+<input type="checkbox" id="a12" disabled value="Leite Condensado">
 <label for="a12">Leite Condensado</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a13" value="Leite em Pó">
+<input type="checkbox" id="a13" disabled value="Leite em Pó">
 <label for="a13">Leite em Pó</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a14" value="Ovomaltine Flocos">
+<input type="checkbox" id="a14" disabled value="Ovomaltine Flocos">
 <label for="a14">Ovomaltine</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a15" value="Paçoca">
+<input type="checkbox" id="a15" disabled value="Paçoca">
 <label for="a15">Paçoca</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="a16" value="Sucrilhos">
+<input type="checkbox" id="a16" disabled value="Sucrilhos">
 <label for="a16">Sucrilhos</label>
 </div>
 
@@ -1584,167 +1651,167 @@ Envie para o WhatsApp.
 <div class="choice-grid">
 
 <div class="choice">
-<input type="checkbox" id="ad1" data-price="8" value="Nutella 70g - R$ 8,00">
+<input type="checkbox" id="ad1" data-price="8" disabled value="Nutella 70g - R$ 8,00">
 <label for="ad1">Nutella 70g</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad2" data-price="6" value="Creme Chocolate/Avelã 70g - R$ 6,00">
+<input type="checkbox" id="ad2" data-price="6" disabled value="Creme Chocolate/Avelã 70g - R$ 6,00">
 <label for="ad2">Creme Avelã</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad3" data-price="5" value="Creme de Leitinho 70g - R$ 5,00">
+<input type="checkbox" id="ad3" data-price="5" disabled value="Creme de Leitinho 70g - R$ 5,00">
 <label for="ad3">Creme Leitinho</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad4" data-price="5" value="Creme de Morango 70g - R$ 5,00">
+<input type="checkbox" id="ad4" data-price="5" disabled value="Creme de Morango 70g - R$ 5,00">
 <label for="ad4">Creme Morango</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad5" data-price="5" value="Creme de Paçoca 70g - R$ 5,00">
+<input type="checkbox" id="ad5" data-price="5" disabled value="Creme de Paçoca 70g - R$ 5,00">
 <label for="ad5">Creme Paçoca</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad6" data-price="2" value="Morango - R$ 2,00">
+<input type="checkbox" id="ad6" data-price="2" disabled value="Morango - R$ 2,00">
 <label for="ad6">Morango</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad7" data-price="2" value="Uva - R$ 2,00">
+<input type="checkbox" id="ad7" data-price="2" disabled value="Uva - R$ 2,00">
 <label for="ad7">Uva</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad8" data-price="2" value="Kiwi - R$ 2,00">
+<input type="checkbox" id="ad8" data-price="2" disabled value="Kiwi - R$ 2,00">
 <label for="ad8">Kiwi</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad9" data-price="1.5" value="Bis - R$ 1,50">
+<input type="checkbox" id="ad9" data-price="1.5" disabled value="Bis - R$ 1,50">
 <label for="ad9">Bis</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad10" data-price="3" value="Beijinho - R$ 3,00">
+<input type="checkbox" id="ad10" data-price="3" disabled value="Beijinho - R$ 3,00">
 <label for="ad10">Beijinho</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad11" data-price="3" value="Brigadeiro - R$ 3,00">
+<input type="checkbox" id="ad11" data-price="3" disabled value="Brigadeiro - R$ 3,00">
 <label for="ad11">Brigadeiro</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad12" data-price="1.5" value="Sonho de Valsa - R$ 1,50">
+<input type="checkbox" id="ad12" data-price="1.5" disabled value="Sonho de Valsa - R$ 1,50">
 <label for="ad12">Sonho de Valsa</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad13" data-price="1.5" value="Ouro Branco - R$ 1,50">
+<input type="checkbox" id="ad13" data-price="1.5" disabled value="Ouro Branco - R$ 1,50">
 <label for="ad13">Ouro Branco</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad14" data-price="1" value="Marshmallows - R$ 1,00">
+<input type="checkbox" id="ad14" data-price="1" disabled value="Marshmallows - R$ 1,00">
 <label for="ad14">Marshmallows</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad15" data-price="2" value="Abacaxi extra - R$ 2,00">
+<input type="checkbox" id="ad15" data-price="2" disabled value="Abacaxi extra - R$ 2,00">
 <label for="ad15">Abacaxi + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad16" data-price="2" value="Banana extra - R$ 2,00">
+<input type="checkbox" id="ad16" data-price="2" disabled value="Banana extra - R$ 2,00">
 <label for="ad16">Banana + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad17" data-price="2" value="Manga extra - R$ 2,00">
+<input type="checkbox" id="ad17" data-price="2" disabled value="Manga extra - R$ 2,00">
 <label for="ad17">Manga + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad18" data-price="2" value="Amendoim extra - R$ 2,00">
+<input type="checkbox" id="ad18" data-price="2" disabled value="Amendoim extra - R$ 2,00">
 <label for="ad18">Amendoim + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad19" data-price="2" value="Bala de Goma extra - R$ 2,00">
+<input type="checkbox" id="ad19" data-price="2" disabled value="Bala de Goma extra - R$ 2,00">
 <label for="ad19">Bala de Goma + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad20" data-price="2" value="Calda de Chocolate extra - R$ 2,00">
+<input type="checkbox" id="ad20" data-price="2" disabled value="Calda de Chocolate extra - R$ 2,00">
 <label for="ad20">Calda de Chocolate + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad21" data-price="2" value="Calda de Mel extra - R$ 2,00">
+<input type="checkbox" id="ad21" data-price="2" disabled value="Calda de Mel extra - R$ 2,00">
 <label for="ad21">Calda de Mel + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad22" data-price="2" value="Calda de Morango extra - R$ 2,00">
+<input type="checkbox" id="ad22" data-price="2" disabled value="Calda de Morango extra - R$ 2,00">
 <label for="ad22">Calda de Morango + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad23" data-price="2" value="Chocoball extra - R$ 2,00">
+<input type="checkbox" id="ad23" data-price="2" disabled value="Chocoball extra - R$ 2,00">
 <label for="ad23">Chocoball + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad24" data-price="2" value="Coco Ralado extra - R$ 2,00">
+<input type="checkbox" id="ad24" data-price="2" disabled value="Coco Ralado extra - R$ 2,00">
 <label for="ad24">Coco Ralado + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad25" data-price="2" value="Coloreti extra - R$ 2,00">
+<input type="checkbox" id="ad25" data-price="2" disabled value="Coloreti extra - R$ 2,00">
 <label for="ad25">Coloreti + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad26" data-price="2" value="Gotas ao Leite extra - R$ 2,00">
+<input type="checkbox" id="ad26" data-price="2" disabled value="Gotas ao Leite extra - R$ 2,00">
 <label for="ad26">Gotas ao Leite + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad27" data-price="2" value="Granola Tradicional extra - R$ 2,00">
+<input type="checkbox" id="ad27" data-price="2" disabled value="Granola Tradicional extra - R$ 2,00">
 <label for="ad27">Granola Tradicional + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad28" data-price="2" value="Granulado extra - R$ 2,00">
+<input type="checkbox" id="ad28" data-price="2" disabled value="Granulado extra - R$ 2,00">
 <label for="ad28">Granulado + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad29" data-price="2" value="Leite Condensado extra - R$ 2,00">
+<input type="checkbox" id="ad29" data-price="2" disabled value="Leite Condensado extra - R$ 2,00">
 <label for="ad29">Leite Condensado + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad30" data-price="2" value="Leite em Pó extra - R$ 2,00">
+<input type="checkbox" id="ad30" data-price="2" disabled value="Leite em Pó extra - R$ 2,00">
 <label for="ad30">Leite em Pó + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad31" data-price="2" value="Ovomaltine Flocos extra - R$ 2,00">
+<input type="checkbox" id="ad31" data-price="2" disabled value="Ovomaltine Flocos extra - R$ 2,00">
 <label for="ad31">Ovomaltine Flocos + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad32" data-price="2" value="Paçoca extra - R$ 2,00">
+<input type="checkbox" id="ad32" data-price="2" disabled value="Paçoca extra - R$ 2,00">
 <label for="ad32">Paçoca + R$ 2,00</label>
 </div>
 
 <div class="choice">
-<input type="checkbox" id="ad33" data-price="2" value="Sucrilhos extra - R$ 2,00">
+<input type="checkbox" id="ad33" data-price="2" disabled value="Sucrilhos extra - R$ 2,00">
 <label for="ad33">Sucrilhos + R$ 2,00</label>
 </div>
 
@@ -1753,9 +1820,88 @@ Envie para o WhatsApp.
 </div>
 
 <div class="total-box" id="resumoTotal">
-  <small>TOTAL DO PEDIDO</small>
+  <small>SUBTOTAL DESTE COPO</small>
   <strong id="valorTotal">R$ 0,00</strong>
   <div class="total-details" id="detalhesTotal">Escolha um tamanho para calcular.</div>
+</div>
+
+<button type="button" class="btn btn-purple" style="width:100%;" onclick="adicionarCopo()">
+➕ Adicionar este copo ao pedido
+</button>
+
+</div>
+
+<div class="builder-form reveal" id="carrinhoResumo" style="display:none;">
+
+<h3 style="color:var(--yellow);margin-bottom:16px;font-size:18px;">Copos no seu pedido</h3>
+
+<div id="listaCarrinho"></div>
+
+<div class="total-box">
+  <small>TOTAL ATÉ AGORA</small>
+  <strong id="valorTotalCarrinho">R$ 0,00</strong>
+</div>
+
+<p style="color:var(--muted);font-size:13px;margin-bottom:16px;">
+Deseja montar outro copo com itens diferentes ou finalizar o pedido?
+</p>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+  <button type="button" class="btn btn-dark" style="flex:1;min-width:180px;" onclick="montarOutroCopo()">
+  🥤 Montar outro copo
+  </button>
+  <button type="button" class="btn btn-yellow" style="flex:1;min-width:180px;" onclick="irParaFinalizar()">
+  ✅ Finalizar pedido
+  </button>
+</div>
+
+</div>
+
+<div class="builder-form reveal" id="finalizarCard" style="display:none;">
+
+<h3 style="color:var(--yellow);margin-bottom:16px;font-size:18px;">Finalizar pedido</h3>
+
+<div class="form-group">
+<label>SEU NOME</label>
+<input id="nome" placeholder="Digite seu nome">
+</div>
+
+<div class="form-group">
+<label>DESCONTO</label>
+<div class="choice-grid">
+  <div class="choice">
+    <input type="checkbox" id="primeiraCompra" value="Primeira compra - 20% OFF">
+    <label for="primeiraCompra">Primeira compra (20% OFF)</label>
+  </div>
+</div>
+</div>
+
+<div class="form-group">
+<label>RETIRADA OU ENTREGA</label>
+
+<div class="payment-options" style="grid-template-columns:repeat(2,1fr);">
+  <div class="payment-option">
+    <input type="radio" name="entrega" id="entregaRetirada" value="Retirada no local">
+    <label for="entregaRetirada">🏠 Retirar no local</label>
+  </div>
+
+  <div class="payment-option">
+    <input type="radio" name="entrega" id="entregaTele" value="Tele-entrega">
+    <label for="entregaTele">🛵 Tele-entrega</label>
+  </div>
+</div>
+
+<div class="entrega-endereco" id="enderecoBox" style="display:none;">
+<label style="display:block;margin-bottom:8px;font-size:11px;font-weight:900;">ENDEREÇO PARA ENTREGA</label>
+<input id="endereco" placeholder="Rua, número, bairro, ponto de referência">
+</div>
+
+</div>
+
+<div class="total-box" id="resumoTotalFinal">
+  <small>TOTAL DO PEDIDO</small>
+  <strong id="valorTotalFinal">R$ 0,00</strong>
+  <div class="total-details" id="detalhesTotalFinal"></div>
 </div>
 
 <div class="form-group">
@@ -1809,9 +1955,15 @@ Envie para o WhatsApp.
 <textarea id="observacao" placeholder="Ex.: sem granola, retirar no local..."></textarea>
 </div>
 
-<button class="btn btn-whatsapp" onclick="montarPedido()">
+<button type="button" class="btn btn-dark" style="width:100%;margin-bottom:12px;" onclick="voltarParaCarrinho()">
+⬅ Voltar para o carrinho
+</button>
+
+<button class="btn btn-whatsapp" style="width:100%;" onclick="montarPedido()">
 💬 Enviar pedido pelo WhatsApp
 </button>
+
+</div>
 
 </div>
 
@@ -1991,8 +2143,7 @@ function pegarSelecionados(seletor){
 }
 
 
-
-  const limitesPorTamanho = {
+const limitesPorTamanho = {
   "330ml": { frutas: 1, acompanhamentos: 3 },
   "440ml": { frutas: 2, acompanhamentos: 4 },
   "550ml": { frutas: 2, acompanhamentos: 4 },
@@ -2012,43 +2163,212 @@ function moeda(valor){
   return valor.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
 }
 
-function calcularTotal(){
+/* CARRINHO DE COPOS (permite montar vários copos diferentes no mesmo pedido) */
+
+const carrinho = [];
+
+const seletorOpcoesDoCopo =
+  '#builderCard input[id^="fruta"], #builderCard input[id^="a"]:not([id^="ad"]), #builderCard input[id^="ad"]';
+
+/* Só libera frutas/acompanhamentos/adicionais depois de escolher o tamanho */
+
+function atualizarBloqueioOpcoes(){
+  const tamanho = document.getElementById("tamanho").value;
+  const lockHint = document.getElementById("lockHint");
+  const opcoes = document.querySelectorAll(seletorOpcoesDoCopo);
+
+  if(tamanho){
+    lockHint.classList.add("hide");
+    opcoes.forEach(item => item.disabled = false);
+  }else{
+    lockHint.classList.remove("hide");
+    opcoes.forEach(item => {
+      item.checked = false;
+      item.disabled = true;
+    });
+  }
+}
+
+function calcularSubtotalCopo(){
   const tamanho = document.getElementById("tamanho").value;
   const quantidadeInput = document.getElementById("quantidade");
   const quantidade = Math.max(1, parseInt(quantidadeInput.value || "1", 10));
-  const primeiraCompra = document.getElementById("primeiraCompra").checked;
   const precoBase = precosPorTamanho[tamanho] || 0;
 
   let totalAdicionaisPorCopo = 0;
-  document.querySelectorAll('#pedido input[id^="ad"]:checked').forEach(item => {
+  document.querySelectorAll('#builderCard input[id^="ad"]:checked').forEach(item => {
     totalAdicionaisPorCopo += Number(item.dataset.price || 0);
   });
 
-  let valorCopos = precoBase * quantidade;
-  if(primeiraCompra){
-    valorCopos *= 0.8;
-  }
-
+  const valorBase = precoBase * quantidade;
   const valorAdicionais = totalAdicionaisPorCopo * quantidade;
-  const total = valorCopos + valorAdicionais;
+  const subtotal = valorBase + valorAdicionais;
 
-  document.getElementById("valorTotal").textContent = moeda(total);
+  document.getElementById("valorTotal").textContent = moeda(subtotal);
 
   if(!tamanho){
     document.getElementById("detalhesTotal").textContent = "Escolha um tamanho para calcular.";
-    return total;
+  }else{
+    document.getElementById("detalhesTotal").textContent =
+      quantidade + "x " + tamanho +
+      (valorAdicionais > 0 ? " • adicionais: " + moeda(valorAdicionais) : "");
   }
 
-  const textoDesconto = primeiraCompra ? " • primeira compra com 20% OFF" : "";
-  document.getElementById("detalhesTotal").textContent =
-    quantidade + "x " + tamanho + textoDesconto +
-    (valorAdicionais > 0 ? " • adicionais: " + moeda(valorAdicionais) : "");
-
-  return total;
+  return { valorBase, valorAdicionais, subtotal };
 }
 
-/* MONTAR PEDIDO */
+function adicionarCopo(){
+  const tamanho = document.getElementById("tamanho").value;
 
+  if(!tamanho){
+    alert("Escolha o tamanho do copo antes de adicionar.");
+    return;
+  }
+
+  const quantidade = Math.max(1, parseInt(document.getElementById("quantidade").value || "1", 10));
+
+  const frutas = pegarSelecionados('#builderCard input[id^="fruta"]');
+  const acompanhamentos = pegarSelecionados('#builderCard input[id^="a"]:not([id^="ad"])');
+  const adicionais = pegarSelecionados('#builderCard input[id^="ad"]');
+
+  const limite = limitesPorTamanho[tamanho];
+
+  if(limite && frutas.length > limite.frutas){
+    alert("O tamanho " + tamanho + " permite no máximo " + limite.frutas + " fruta(s).");
+    return;
+  }
+
+  if(limite && acompanhamentos.length > limite.acompanhamentos){
+    alert("O tamanho " + tamanho + " permite no máximo " + limite.acompanhamentos + " acompanhamento(s).");
+    return;
+  }
+
+  const resultado = calcularSubtotalCopo();
+
+  carrinho.push({
+    tamanho,
+    quantidade,
+    frutas,
+    acompanhamentos,
+    adicionais,
+    valorBase: resultado.valorBase,
+    valorAdicionais: resultado.valorAdicionais,
+    subtotal: resultado.subtotal
+  });
+
+  /* limpa o formulário para montar o próximo copo do zero */
+  document.getElementById("tamanho").value = "";
+  document.getElementById("quantidade").value = 1;
+  document.querySelectorAll(seletorOpcoesDoCopo).forEach(item => item.checked = false);
+  atualizarBloqueioOpcoes();
+  calcularSubtotalCopo();
+
+  renderCarrinho();
+
+  document.getElementById("builderCard").style.display = "none";
+  document.getElementById("carrinhoResumo").style.display = "block";
+  document.getElementById("carrinhoResumo").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function renderCarrinho(){
+  const lista = document.getElementById("listaCarrinho");
+
+  lista.innerHTML = carrinho.map((copo, indice) => {
+    const partes = [];
+    if(copo.frutas.length) partes.push("Frutas: " + copo.frutas.join(", "));
+    if(copo.acompanhamentos.length) partes.push("Acompanhamentos: " + copo.acompanhamentos.join(", "));
+    if(copo.adicionais.length) partes.push("Adicionais: " + copo.adicionais.join(", "));
+
+    let itemHtml = '<div class="carrinho-item">';
+    itemHtml += '<div class="carrinho-item-info">';
+    itemHtml += '<strong>Copo ' + (indice + 1) + ' • ' + copo.quantidade + 'x ' + copo.tamanho + ' • ' + moeda(copo.subtotal) + '</strong>';
+    partes.forEach(texto => {
+      itemHtml += '<span>' + texto + '</span>';
+    });
+    itemHtml += '</div>';
+    itemHtml += '<button type="button" class="carrinho-item-remover" onclick="removerCopo(' + indice + ')">remover</button>';
+    itemHtml += '</div>';
+    return itemHtml;
+  }).join("");
+
+  const totais = calcularTotais();
+  document.getElementById("valorTotalCarrinho").textContent = moeda(totais.total);
+}
+
+function removerCopo(indice){
+  carrinho.splice(indice, 1);
+  renderCarrinho();
+
+  if(carrinho.length === 0){
+    montarOutroCopo();
+  }
+}
+
+function montarOutroCopo(){
+  document.getElementById("carrinhoResumo").style.display = "none";
+  document.getElementById("finalizarCard").style.display = "none";
+  document.getElementById("builderCard").style.display = "block";
+  document.getElementById("builderCard").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function irParaFinalizar(){
+  if(carrinho.length === 0){
+    alert("Monte pelo menos um copo antes de finalizar.");
+    return;
+  }
+  document.getElementById("carrinhoResumo").style.display = "none";
+  document.getElementById("finalizarCard").style.display = "block";
+  atualizarTotalFinal();
+  document.getElementById("finalizarCard").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function voltarParaCarrinho(){
+  document.getElementById("finalizarCard").style.display = "none";
+  document.getElementById("carrinhoResumo").style.display = "block";
+  renderCarrinho();
+}
+
+function calcularTotais(){
+  let valorBaseTotal = 0;
+  let valorAdicionaisTotal = 0;
+
+  carrinho.forEach(copo => {
+    valorBaseTotal += copo.valorBase;
+    valorAdicionaisTotal += copo.valorAdicionais;
+  });
+
+  const primeiraCompra = document.getElementById("primeiraCompra").checked;
+  if(primeiraCompra){
+    valorBaseTotal *= 0.8;
+  }
+
+  return {
+    valorBaseTotal,
+    valorAdicionaisTotal,
+    total: valorBaseTotal + valorAdicionaisTotal
+  };
+}
+
+function atualizarTotalFinal(){
+  const totais = calcularTotais();
+  const primeiraCompra = document.getElementById("primeiraCompra").checked;
+  const totalCopos = carrinho.reduce((soma, copo) => soma + copo.quantidade, 0);
+
+  document.getElementById("valorTotalFinal").textContent = moeda(totais.total);
+  document.getElementById("detalhesTotalFinal").textContent =
+    totalCopos + " copo(s) no pedido" + (primeiraCompra ? " • primeira compra com 20% OFF" : "");
+}
+
+/* RETIRADA OU ENTREGA */
+
+document.querySelectorAll('input[name="entrega"]').forEach(item => {
+  item.addEventListener("change", function(){
+    const enderecoBox = document.getElementById("enderecoBox");
+    enderecoBox.style.display = this.value === "Tele-entrega" ? "block" : "none";
+  });
+});
+
+document.getElementById("primeiraCompra").addEventListener("change", atualizarTotalFinal);
 
 /* PAGAMENTO */
 /* Preencha estes dois dados quando seu tio confirmar exatamente como aparecem no Pix. */
@@ -2089,17 +2409,26 @@ document.querySelectorAll('input[name="pagamento"]').forEach(item => {
   item.addEventListener("change", atualizarPagamento);
 });
 
+/* MONTAR PEDIDO */
+
 function montarPedido(){
 
   const nome =
     document.getElementById("nome").value.trim();
 
-  const tamanho =
-    document.getElementById("tamanho").value;
+  if(carrinho.length === 0){
+    alert("Monte pelo menos um copo antes de enviar o pedido.");
+    return;
+  }
 
-  const quantidade = Math.max(1, parseInt(document.getElementById("quantidade").value || "1", 10));
-  const primeiraCompra = document.getElementById("primeiraCompra").checked;
-  const total = calcularTotal();
+  const entregaSelecionada =
+    document.querySelector('input[name="entrega"]:checked');
+
+  const formaEntrega =
+    entregaSelecionada ? entregaSelecionada.value : "";
+
+  const endereco =
+    document.getElementById("endereco").value.trim();
 
   const formaPagamentoSelecionada =
     document.querySelector('input[name="pagamento"]:checked');
@@ -2110,111 +2439,73 @@ function montarPedido(){
   const observacao =
     document.getElementById("observacao").value.trim();
 
-  const frutas =
-    pegarSelecionados(
-      '#pedido input[id^="fruta"]'
-    );
-
-  const acompanhamentos =
-    pegarSelecionados(
-      '#pedido input[id^="a"]:not([id^="ad"])'
-    );
-
-  const adicionais =
-    pegarSelecionados(
-      '#pedido input[id^="ad"]'
-    );
-const limite = limitesPorTamanho[tamanho];
-
-if(limite && frutas.length > limite.frutas){
-  alert("O tamanho " + tamanho + " permite no máximo " + limite.frutas + " fruta(s).");
-  return;
-}
-
-if(limite && acompanhamentos.length > limite.acompanhamentos){
-  alert("O tamanho " + tamanho + " permite no máximo " + limite.acompanhamentos + " acompanhamento(s).");
-  return;
-}
+  const primeiraCompra = document.getElementById("primeiraCompra").checked;
 
   if(!nome){
-
     alert("Digite seu nome.");
     return;
-
   }
 
-  if(!tamanho){
-
-    alert("Escolha o tamanho.");
+  if(!formaEntrega){
+    alert("Escolha se é retirada no local ou tele-entrega.");
     return;
+  }
 
+  if(formaEntrega === "Tele-entrega" && !endereco){
+    alert("Digite o endereço para a entrega.");
+    return;
   }
 
   if(!formaPagamento){
-
     alert("Escolha a forma de pagamento.");
     return;
-
   }
 
+  const totais = calcularTotais();
 
   let mensagem =
-`Olá! Gostaria de fazer um pedido no Açaí do Morenão 💜
+"Olá! Gostaria de fazer um pedido no Açaí do Morenão 💜\n\n👤 Nome: " + nome;
 
-👤 Nome: ${nome}
-🥤 Tamanho: ${tamanho}
-🔢 Quantidade: ${quantidade}${primeiraCompra ? "\n🏷️ Primeira compra: 20% OFF" : ""}`;
+  carrinho.forEach((copo, indice) => {
+    mensagem += "\n\n🥤 Copo " + (indice + 1) + ": " + copo.quantidade + "x " + copo.tamanho;
 
+    if(copo.frutas.length){
+      mensagem += "\n🍌 Frutas: " + copo.frutas.join(", ");
+    }
 
-  if(frutas.length){
+    if(copo.acompanhamentos.length){
+      mensagem += "\n🥣 Acompanhamentos: " + copo.acompanhamentos.join(", ");
+    }
 
-    mensagem +=
-`\n🍌 Frutas: ${frutas.join(", ")}`;
+    if(copo.adicionais.length){
+      mensagem += "\n✨ Adicionais: " + copo.adicionais.join(", ");
+    }
+  });
 
+  mensagem += "\n\n" + (formaEntrega === "Tele-entrega" ? "🛵" : "🏠") + " Retirada/entrega: " + formaEntrega;
+
+  if(formaEntrega === "Tele-entrega"){
+    mensagem += "\n📍 Endereço: " + endereco;
   }
 
-
-  if(acompanhamentos.length){
-
-    mensagem +=
-`\n🥣 Acompanhamentos: ${acompanhamentos.join(", ")}`;
-
+  if(primeiraCompra){
+    mensagem += "\n🏷️ Primeira compra: 20% OFF";
   }
-
-
-  if(adicionais.length){
-
-    mensagem +=
-`\n✨ Adicionais: ${adicionais.join(", ")}`;
-
-  }
-
 
   if(observacao){
-
-    mensagem +=
-`\n📝 Observação: ${observacao}`;
-
+    mensagem += "\n📝 Observação: " + observacao;
   }
 
-
-  mensagem +=
-`\n💰 Total: ${moeda(total)}`;
-
-  mensagem +=
-`\n💳 Forma de pagamento: ${formaPagamento}`;
+  mensagem += "\n💰 Total: " + moeda(totais.total);
+  mensagem += "\n💳 Forma de pagamento: " + formaPagamento;
 
   if(formaPagamento === "Pix"){
-    mensagem +=
-`\n📱 Pix (CNPJ): ${PIX_CNPJ}`;
-    mensagem +=
-`\n🏢 Razão social: ${PIX_RAZAO_SOCIAL}`;
-    mensagem +=
-`\n📎 Após o pagamento, enviar o comprovante pelo WhatsApp.`;
+    mensagem += "\n📱 Pix (CNPJ): " + PIX_CNPJ;
+    mensagem += "\n🏢 Razão social: " + PIX_RAZAO_SOCIAL;
+    mensagem += "\n📎 Após o pagamento, enviar o comprovante pelo WhatsApp.";
   }
 
-  mensagem +=
-`\n\nPedido montado pelo site do Açaí do Morenão.`;
+  mensagem += "\n\nPedido montado pelo site do Açaí do Morenão.";
 
   window.open(
     "https://wa.me/5567991432309?text=" +
@@ -2223,15 +2514,16 @@ if(limite && acompanhamentos.length > limite.acompanhamentos){
   );
 
 }
-document.querySelectorAll('#pedido input[type="checkbox"]').forEach(item => {
+
+document.querySelectorAll(seletorOpcoesDoCopo).forEach(item => {
   item.addEventListener("change", function(){
 
     const tamanho = document.getElementById("tamanho").value;
     const limite = limitesPorTamanho[tamanho];
 
     if(limite){
-      const frutas = pegarSelecionados('#pedido input[id^="fruta"]');
-      const acompanhamentos = pegarSelecionados('#pedido input[id^="a"]:not([id^="ad"])');
+      const frutas = pegarSelecionados('#builderCard input[id^="fruta"]');
+      const acompanhamentos = pegarSelecionados('#builderCard input[id^="a"]:not([id^="ad"])');
 
       if(this.id.startsWith("fruta") && frutas.length > limite.frutas){
         this.checked = false;
@@ -2244,27 +2536,30 @@ document.querySelectorAll('#pedido input[type="checkbox"]').forEach(item => {
       }
     }
 
-    calcularTotal();
+    calcularSubtotalCopo();
   });
 });
 
 document.getElementById("tamanho").addEventListener("change", function(){
+  atualizarBloqueioOpcoes();
+
   const limite = limitesPorTamanho[this.value];
   if(limite){
-    const frutasMarcadas = Array.from(document.querySelectorAll('#pedido input[id^="fruta"]:checked'));
-    const acompMarcados = Array.from(document.querySelectorAll('#pedido input[id^="a"]:not([id^="ad"]):checked'));
+    const frutasMarcadas = Array.from(document.querySelectorAll('#builderCard input[id^="fruta"]:checked'));
+    const acompMarcados = Array.from(document.querySelectorAll('#builderCard input[id^="a"]:not([id^="ad"]):checked'));
     frutasMarcadas.slice(limite.frutas).forEach(item => item.checked = false);
     acompMarcados.slice(limite.acompanhamentos).forEach(item => item.checked = false);
   }
-  calcularTotal();
+  calcularSubtotalCopo();
 });
 
 document.getElementById("quantidade").addEventListener("input", function(){
   if(Number(this.value) < 1) this.value = 1;
-  calcularTotal();
+  calcularSubtotalCopo();
 });
 
-calcularTotal();
+atualizarBloqueioOpcoes();
+calcularSubtotalCopo();
 </script>
 
 </body>
