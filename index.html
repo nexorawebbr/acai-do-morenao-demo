@@ -42,6 +42,56 @@ body{
   overflow-x:hidden;
 }
 
+/* GRÃO SUTIL — tira o efeito "gradiente digital plano" do fundo */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection{
+  background:var(--yellow);
+  color:#210528;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid var(--yellow);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+html{
+  scrollbar-color:#a01ed1 #0d0313;
+  scrollbar-width:thin;
+}
+
+::-webkit-scrollbar{
+  width:11px;
+}
+
+::-webkit-scrollbar-track{
+  background:#0d0313;
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#a01ed1,#66108b);
+  border-radius:20px;
+  border:2px solid #0d0313;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,#b52be7,#7c14a8);
+}
+
 a{
   color:inherit;
   text-decoration:none;
@@ -59,6 +109,7 @@ button{
   width:min(1180px,90%);
   margin:auto;
 }
+
 
 /* DEMO */
 
@@ -279,6 +330,59 @@ h1{
   border-radius:50%;
   background:radial-gradient(circle,rgba(160,42,210,.45),transparent 68%);
   filter:blur(25px);
+}
+
+/* FRUTINHAS FLUTUANDO AO REDOR DO COPO */
+
+.garnish{
+  position:absolute;
+  z-index:3;
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.4));
+  animation:boiar 5.5s ease-in-out infinite;
+  transform:rotate(var(--r,0deg));
+}
+
+.garnish-morango{
+  width:76px;
+  top:-2%;
+  left:-6%;
+  --r:-14deg;
+  animation-delay:0s;
+}
+
+.garnish-banana{
+  width:64px;
+  bottom:10%;
+  right:-8%;
+  --r:10deg;
+  animation-delay:1.1s;
+}
+
+.garnish-folha{
+  width:44px;
+  top:16%;
+  right:0%;
+  --r:-20deg;
+  animation-delay:.6s;
+}
+
+.garnish-granola{
+  width:56px;
+  bottom:-3%;
+  left:12%;
+  --r:6deg;
+  animation-delay:1.7s;
+}
+
+@keyframes boiar{
+  0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); }
+  50%{ transform:translateY(-14px) rotate(var(--r,0deg)); }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .garnish{
+    animation:none;
+  }
 }
 
 .hero-card{
@@ -1004,6 +1108,22 @@ footer{
     min-height:430px;
   }
 
+  .garnish-morango{
+    width:52px;
+  }
+
+  .garnish-banana{
+    width:44px;
+  }
+
+  .garnish-folha{
+    width:32px;
+  }
+
+  .garnish-granola{
+    width:38px;
+  }
+
   .hero-card{
     padding:25px 20px;
   }
@@ -1121,6 +1241,52 @@ Ver cardápio ↓
 <div class="hero-visual reveal">
 
 <div class="glow"></div>
+
+<svg class="garnish garnish-morango" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs>
+<linearGradient id="gMorango" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#ff7a90"/>
+<stop offset="100%" stop-color="#e21b4e"/>
+</linearGradient>
+</defs>
+<path d="M50 8C24 8 10 34 10 54c0 24 18 40 40 40s40-16 40-40C90 34 76 8 50 8z" fill="url(#gMorango)"/>
+<path d="M50 8c-6 0-10 6-10 6s6 4 10 4 10-4 10-4-4-6-10-6z" fill="#3fae54"/>
+<path d="M28 46c6-4 14-6 22-6s16 2 22 6" stroke="#ffe1c2" stroke-width="3" fill="none" stroke-linecap="round" opacity=".55"/>
+<circle cx="34" cy="58" r="2.4" fill="#ffe9a8"/>
+<circle cx="46" cy="70" r="2.4" fill="#ffe9a8"/>
+<circle cx="60" cy="60" r="2.4" fill="#ffe9a8"/>
+<circle cx="56" cy="78" r="2.4" fill="#ffe9a8"/>
+<circle cx="68" cy="72" r="2.4" fill="#ffe9a8"/>
+</svg>
+
+<svg class="garnish garnish-banana" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs>
+<linearGradient id="gBanana" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#fff3c2"/>
+<stop offset="100%" stop-color="#ffe066"/>
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" r="42" fill="#f5c94a"/>
+<circle cx="50" cy="50" r="34" fill="url(#gBanana)"/>
+<circle cx="50" cy="50" r="8" fill="#fffdf3"/>
+<circle cx="44" cy="46" r="1.6" fill="#8a6d1c"/>
+<circle cx="56" cy="46" r="1.6" fill="#8a6d1c"/>
+<circle cx="50" cy="56" r="1.6" fill="#8a6d1c"/>
+</svg>
+
+<svg class="garnish garnish-folha" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M20 70C10 40 35 12 78 14 82 55 58 82 20 70z" fill="#3fae54"/>
+<path d="M24 66C34 46 50 30 72 20" stroke="#2a7c3c" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
+
+<svg class="garnish garnish-granola" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<ellipse cx="34" cy="40" rx="16" ry="12" fill="#c98b4a" transform="rotate(-15 34 40)"/>
+<ellipse cx="60" cy="34" rx="14" ry="10" fill="#e0aa66" transform="rotate(10 60 34)"/>
+<ellipse cx="50" cy="58" rx="18" ry="13" fill="#a9702f" transform="rotate(4 50 58)"/>
+<circle cx="44" cy="52" r="4" fill="#4a2c1c"/>
+<circle cx="62" cy="58" r="3" fill="#4a2c1c"/>
+<circle cx="30" cy="46" r="2.6" fill="#4a2c1c"/>
+</svg>
 
 <div class="hero-card">
 
@@ -1522,11 +1688,6 @@ Finalize e envie para o WhatsApp.
 🔒 Escolha o tamanho primeiro para liberar frutas, acompanhamentos e adicionais.
 </div>
 
-</div>
-
-<div class="form-group">
-<label>QUANTIDADE DESTE COPO</label>
-<input id="quantidade" type="number" min="1" value="1" inputmode="numeric">
 </div>
 
 <div class="form-group">
@@ -2191,8 +2352,6 @@ function atualizarBloqueioOpcoes(){
 
 function calcularSubtotalCopo(){
   const tamanho = document.getElementById("tamanho").value;
-  const quantidadeInput = document.getElementById("quantidade");
-  const quantidade = Math.max(1, parseInt(quantidadeInput.value || "1", 10));
   const precoBase = precosPorTamanho[tamanho] || 0;
 
   let totalAdicionaisPorCopo = 0;
@@ -2200,8 +2359,8 @@ function calcularSubtotalCopo(){
     totalAdicionaisPorCopo += Number(item.dataset.price || 0);
   });
 
-  const valorBase = precoBase * quantidade;
-  const valorAdicionais = totalAdicionaisPorCopo * quantidade;
+  const valorBase = precoBase;
+  const valorAdicionais = totalAdicionaisPorCopo;
   const subtotal = valorBase + valorAdicionais;
 
   document.getElementById("valorTotal").textContent = moeda(subtotal);
@@ -2210,7 +2369,7 @@ function calcularSubtotalCopo(){
     document.getElementById("detalhesTotal").textContent = "Escolha um tamanho para calcular.";
   }else{
     document.getElementById("detalhesTotal").textContent =
-      quantidade + "x " + tamanho +
+      tamanho +
       (valorAdicionais > 0 ? " • adicionais: " + moeda(valorAdicionais) : "");
   }
 
@@ -2224,8 +2383,6 @@ function adicionarCopo(){
     alert("Escolha o tamanho do copo antes de adicionar.");
     return;
   }
-
-  const quantidade = Math.max(1, parseInt(document.getElementById("quantidade").value || "1", 10));
 
   const frutas = pegarSelecionados('#builderCard input[id^="fruta"]');
   const acompanhamentos = pegarSelecionados('#builderCard input[id^="a"]:not([id^="ad"])');
@@ -2247,7 +2404,6 @@ function adicionarCopo(){
 
   carrinho.push({
     tamanho,
-    quantidade,
     frutas,
     acompanhamentos,
     adicionais,
@@ -2258,7 +2414,6 @@ function adicionarCopo(){
 
   /* limpa o formulário para montar o próximo copo do zero */
   document.getElementById("tamanho").value = "";
-  document.getElementById("quantidade").value = 1;
   document.querySelectorAll(seletorOpcoesDoCopo).forEach(item => item.checked = false);
   atualizarBloqueioOpcoes();
   calcularSubtotalCopo();
@@ -2281,7 +2436,7 @@ function renderCarrinho(){
 
     let itemHtml = '<div class="carrinho-item">';
     itemHtml += '<div class="carrinho-item-info">';
-    itemHtml += '<strong>Copo ' + (indice + 1) + ' • ' + copo.quantidade + 'x ' + copo.tamanho + ' • ' + moeda(copo.subtotal) + '</strong>';
+    itemHtml += '<strong>Copo ' + (indice + 1) + ' • ' + copo.tamanho + ' • ' + moeda(copo.subtotal) + '</strong>';
     partes.forEach(texto => {
       itemHtml += '<span>' + texto + '</span>';
     });
@@ -2352,7 +2507,7 @@ function calcularTotais(){
 function atualizarTotalFinal(){
   const totais = calcularTotais();
   const primeiraCompra = document.getElementById("primeiraCompra").checked;
-  const totalCopos = carrinho.reduce((soma, copo) => soma + copo.quantidade, 0);
+  const totalCopos = carrinho.length;
 
   document.getElementById("valorTotalFinal").textContent = moeda(totais.total);
   document.getElementById("detalhesTotalFinal").textContent =
@@ -2467,7 +2622,7 @@ function montarPedido(){
 "Olá! Gostaria de fazer um pedido no Açaí do Morenão 💜\n\n👤 Nome: " + nome;
 
   carrinho.forEach((copo, indice) => {
-    mensagem += "\n\n🥤 Copo " + (indice + 1) + ": " + copo.quantidade + "x " + copo.tamanho;
+    mensagem += "\n\n🥤 Copo " + (indice + 1) + ": " + copo.tamanho;
 
     if(copo.frutas.length){
       mensagem += "\n🍌 Frutas: " + copo.frutas.join(", ");
@@ -2550,11 +2705,6 @@ document.getElementById("tamanho").addEventListener("change", function(){
     frutasMarcadas.slice(limite.frutas).forEach(item => item.checked = false);
     acompMarcados.slice(limite.acompanhamentos).forEach(item => item.checked = false);
   }
-  calcularSubtotalCopo();
-});
-
-document.getElementById("quantidade").addEventListener("input", function(){
-  if(Number(this.value) < 1) this.value = 1;
   calcularSubtotalCopo();
 });
 
