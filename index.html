@@ -716,10 +716,42 @@ section{
   resize:vertical;
 }
 
+.search-input{
+  width:100%;
+  padding:12px 14px;
+  margin-bottom:10px;
+  color:white;
+  background:#17051f;
+  border:1px solid var(--line);
+  border-radius:13px;
+  outline:none;
+  font-size:13px;
+}
+
+.search-input::placeholder{
+  color:var(--muted);
+}
+
+.search-input:focus{
+  border-color:var(--purple2);
+}
+
 .choice-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:9px;
+}
+
+.choice.oculto{
+  display:none !important;
+}
+
+.choice-empty{
+  grid-column:1 / -1;
+  color:var(--muted);
+  font-size:12px;
+  text-align:center;
+  padding:14px;
 }
 
 .choice{
@@ -1719,7 +1751,9 @@ Finalize e envie para o WhatsApp.
 
 <label>ACOMPANHAMENTOS</label>
 
-<div class="choice-grid">
+<input type="text" class="search-input" id="buscaAcompanhamentos" placeholder="🔎 Buscar acompanhamento..." oninput="filtrarChoices('buscaAcompanhamentos','gradeAcompanhamentos')">
+
+<div class="choice-grid" id="gradeAcompanhamentos">
 
 <div class="choice">
 <input type="checkbox" id="a1" disabled value="Amendoim">
@@ -1809,76 +1843,78 @@ Finalize e envie para o WhatsApp.
 
 <label>ADICIONAIS</label>
 
-<div class="choice-grid">
+<input type="text" class="search-input" id="buscaAdicionais" placeholder="🔎 Buscar adicional..." oninput="filtrarChoices('buscaAdicionais','gradeAdicionais')">
+
+<div class="choice-grid" id="gradeAdicionais">
 
 <div class="choice">
 <input type="checkbox" id="ad1" data-price="8" disabled value="Nutella 70g - R$ 8,00">
-<label for="ad1">Nutella 70g</label>
+<label for="ad1">Nutella (70g) — R$ 8,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad2" data-price="6" disabled value="Creme Chocolate/Avelã 70g - R$ 6,00">
-<label for="ad2">Creme Avelã</label>
+<label for="ad2">Creme Avelã (70g) — R$ 6,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad3" data-price="5" disabled value="Creme de Leitinho 70g - R$ 5,00">
-<label for="ad3">Creme Leitinho</label>
+<label for="ad3">Creme Leitinho (70g) — R$ 5,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad4" data-price="5" disabled value="Creme de Morango 70g - R$ 5,00">
-<label for="ad4">Creme Morango</label>
+<label for="ad4">Creme Morango (70g) — R$ 5,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad5" data-price="5" disabled value="Creme de Paçoca 70g - R$ 5,00">
-<label for="ad5">Creme Paçoca</label>
+<label for="ad5">Creme Paçoca (70g) — R$ 5,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad6" data-price="2" disabled value="Morango - R$ 2,00">
-<label for="ad6">Morango</label>
+<label for="ad6">Morango — R$ 2,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad7" data-price="2" disabled value="Uva - R$ 2,00">
-<label for="ad7">Uva</label>
+<label for="ad7">Uva — R$ 2,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad8" data-price="2" disabled value="Kiwi - R$ 2,00">
-<label for="ad8">Kiwi</label>
+<label for="ad8">Kiwi — R$ 2,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad9" data-price="1.5" disabled value="Bis - R$ 1,50">
-<label for="ad9">Bis</label>
+<label for="ad9">Bis (1Uni) — R$ 1,50</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad10" data-price="3" disabled value="Beijinho - R$ 3,00">
-<label for="ad10">Beijinho</label>
+<label for="ad10">Beijinho (2Uni) — R$ 3,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad11" data-price="3" disabled value="Brigadeiro - R$ 3,00">
-<label for="ad11">Brigadeiro</label>
+<label for="ad11">Brigadeiro (2Uni) — R$ 3,00</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad12" data-price="1.5" disabled value="Sonho de Valsa - R$ 1,50">
-<label for="ad12">Sonho de Valsa</label>
+<label for="ad12">Sonho de Valsa (1Uni) — R$ 1,50</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad13" data-price="1.5" disabled value="Ouro Branco - R$ 1,50">
-<label for="ad13">Ouro Branco</label>
+<label for="ad13">Ouro Branco (1Uni) — R$ 1,50</label>
 </div>
 
 <div class="choice">
 <input type="checkbox" id="ad14" data-price="1" disabled value="Marshmallows - R$ 1,00">
-<label for="ad14">Marshmallows</label>
+<label for="ad14">Marshmallows (2Uni) — R$ 1,00</label>
 </div>
 
 <div class="choice">
@@ -2031,8 +2067,8 @@ Deseja montar outro copo com itens diferentes ou finalizar o pedido?
 <label>DESCONTO</label>
 <div class="choice-grid">
   <div class="choice">
-    <input type="checkbox" id="primeiraCompra" value="Primeira compra - 20% OFF">
-    <label for="primeiraCompra">Primeira compra (20% OFF)</label>
+    <input type="checkbox" id="primeiraCompra" value="Primeira Compra via WhatsApp - 20% OFF">
+    <label for="primeiraCompra">Primeira Compra via WhatsApp (20% OFF)</label>
   </div>
 </div>
 </div>
@@ -2277,6 +2313,50 @@ document
 .forEach(el => observer.observe(el));
 
 
+/* BUSCA EM ACOMPANHAMENTOS E ADICIONAIS */
+
+function filtrarChoices(idBusca, idGrade){
+
+  const termo = document.getElementById(idBusca).value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+  const grade = document.getElementById(idGrade);
+  const itens = grade.querySelectorAll(".choice");
+  let algumVisivel = false;
+
+  itens.forEach(item => {
+
+    const label = item.querySelector("label");
+    const texto = label ? label.textContent
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") : "";
+
+    const corresponde = texto.includes(termo);
+    item.classList.toggle("oculto", !corresponde);
+
+    if(corresponde) algumVisivel = true;
+
+  });
+
+  let aviso = grade.querySelector(".choice-empty");
+
+  if(!algumVisivel){
+    if(!aviso){
+      aviso = document.createElement("div");
+      aviso.className = "choice-empty";
+      aviso.textContent = "Nenhum item encontrado.";
+      grade.appendChild(aviso);
+    }
+  } else if(aviso){
+    aviso.remove();
+  }
+
+}
+
 /* WHATSAPP */
 
 function abrirWhatsApp(){
@@ -2511,7 +2591,7 @@ function atualizarTotalFinal(){
 
   document.getElementById("valorTotalFinal").textContent = moeda(totais.total);
   document.getElementById("detalhesTotalFinal").textContent =
-    totalCopos + " copo(s) no pedido" + (primeiraCompra ? " • primeira compra com 20% OFF" : "");
+    totalCopos + " copo(s) no pedido" + (primeiraCompra ? " • Primeira Compra via WhatsApp (20% OFF)" : "");
 }
 
 /* RETIRADA OU ENTREGA */
@@ -2644,7 +2724,7 @@ function montarPedido(){
   }
 
   if(primeiraCompra){
-    mensagem += "\n🏷️ Primeira compra: 20% OFF";
+    mensagem += "\n🏷️ Primeira Compra via WhatsApp: 20% OFF";
   }
 
   if(observacao){
